@@ -3,7 +3,6 @@
 
 Player::Player() : m_val(0)
 {
-	SetState(State::Stand);
 	m_mesh.reset(new Jig::ObjMesh("../Wombat/res/player.obj"));
 }
 
@@ -13,15 +12,7 @@ Player::~Player()
 
 void Player::Update(float tDelta)
 {
-	if (m_state == State::Walk)
-		m_val += tDelta;
-}
-
-void Player::SetState(State s)
-{
-	if (s != m_state)
-		m_val = 0;
-	m_state = s;
+	m_val += tDelta;
 }
 
 void Player::Draw() const

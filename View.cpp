@@ -21,14 +21,6 @@ View::~View()
 
 void View::Update(float tDelta)
 {
-	int x = 0, z = 0;
-
-	x -= sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-	x += sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-    z -= sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-    z += sf::Keyboard::isKeyPressed(sf::Keyboard::S);
-
-	m_pPlayer->SetState(z == 0 && x == 0 ? Player::State::Stand : Player::State::Walk);
 	m_pPlayer->Update(tDelta);
 
 	float vRotationDelta = tDelta * 200;
