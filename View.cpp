@@ -8,10 +8,12 @@
 #include <iostream>
 #include <set>
 
+#define GL_RESCALE_NORMAL 0x803A
+
 using namespace Jig;
 
 View::View() : m_pPlayer(new Player), m_bWireframe(false), m_bHitTest(true), 
-m_vAngle(0), m_hAngle(0), m_zoom(3)
+m_vAngle(0), m_hAngle(0), m_zoom(1)
 {
 }
 
@@ -33,9 +35,9 @@ void View::Update(float tDelta)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		m_hAngle -= vRotationDelta;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown))
-		m_zoom += tDelta * 20;
+		m_zoom *= 1 + tDelta;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp))
-		m_zoom -= tDelta * 20;
+		m_zoom /= 1 + tDelta;
 }
 
 void View::Draw(sf::RenderWindow& win) const
@@ -48,6 +50,7 @@ void View::Draw(sf::RenderWindow& win) const
 	glEnable(GL_CULL_FACE);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_RESCALE_NORMAL);
 
 	float amb[] = { 0.2f, 0.2f, 0.2f, 0 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
@@ -59,7 +62,7 @@ void View::Draw(sf::RenderWindow& win) const
 	float light0[] = { -10, 10, 30, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light0);
 
-	glTranslatef(0, 0, -m_zoom);
+	glScalef(m_zoom, m_zoom, m_zoom);
 
 	glRotatef(m_vAngle, 1, 0, 0);
 	glRotatef(m_hAngle, 0, 1, 0);
