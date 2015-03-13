@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "View.h"
 #include "Player.h"
 
