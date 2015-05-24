@@ -91,7 +91,8 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 
 	if (cx && cy && !m_window)
 	{
-		m_window = std::make_unique<sf::RenderWindow>(GetSafeHwnd());
+		sf::ContextSettings settings(32); // Depth bits.
+		m_window = std::make_unique<sf::RenderWindow>(GetSafeHwnd(), settings);
 		m_clock = std::make_unique<sf::Clock>();
 		m_view = std::make_unique<View>();
 		SetTimer(1, 1000 / 30, nullptr);
